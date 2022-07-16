@@ -1,8 +1,13 @@
-// Application hooks that run for every service
+const constants = require('./constants');
+
+const setClientToParams = (ctx) => {
+  ctx.params.redisClient = ctx.app.get(constants.APP_REDIS_CLIENT);
+  return ctx;
+};
 
 module.exports = {
   before: {
-    all: [],
+    all: [setClientToParams],
     find: [],
     get: [],
     create: [],

@@ -9,9 +9,9 @@ const feathers = require('@feathersjs/feathers');
 const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 
-const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
+const redis = require('./redis');
 
 const authentication = require('./authentication');
 
@@ -32,8 +32,7 @@ app.use('/', express.static(app.get('public')));
 // Set up Plugins and providers
 app.configure(express.rest());
 
-// Configure other middleware (see `middleware/index.js`)
-app.configure(middleware);
+app.configure(redis);
 app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
