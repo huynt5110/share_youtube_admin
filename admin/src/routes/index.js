@@ -6,48 +6,56 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+
 // Pages
+import DashboardLayout from 'components/dashboardLayout';
 import HomePage from 'page/home_page';
+import SharePage from 'page/share_movies';
 
 export const publicRouteList = [
   {
     path: '/',
     component: HomePage,
-    page: 'home',
   },
 ];
 
-export const AppContext = React.createContext();
-
-const Dashboard = ({ children }) => {
-  return <>{children}</>;
-};
+const privateRouteList = [
+  {
+    path: '/share',
+    component: SharePage,
+  },
+];
 
 const Routes = (props) => {
-  const routeComponents = publicRouteList.map((route, key) => (
+  const isSignIn = useSelector((state) => state.user.isSignIn);
+
+  let routeList = publicRouteList;
+  if (isSignIn) routeList = [...routeList, ...privateRouteList];
+
+  const routeComponents = routeList.map((route, key) => (
     <Route
       exact
       path={route.path}
       key={key}
       render={(routeProps) => {
         return (
-          <Dashboard page={route.page}>
+          <DashboardLayout page={route.page}>
             <route.component {...routeProps} />
-          </Dashboard>
+          </DashboardLayout>
         );
       }}
     />
   ));
 
   return (
-    <AppContext.Provider>
-      <Router>
-        <Switch>
-          {routeComponents}
-          <Redirect to="/" />
-        </Switch>
-      </Router>
-    </AppContext.Provider>
+    <Router>
+      <Switch>
+        {routeComponents}
+        <Redirect to="/" />
+      </Switch>
+    </Router>
   );
 };
 

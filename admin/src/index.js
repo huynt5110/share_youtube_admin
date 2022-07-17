@@ -10,15 +10,13 @@ import Routes from './routes';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <React.StrictMode>
-    <StylesProvider injectFirst>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <Routes />
-        </PersistGate>
-      </Provider>
-    </StylesProvider>
-  </React.StrictMode>
+  <StylesProvider injectFirst>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Routes />
+      </PersistGate>
+    </Provider>
+  </StylesProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
