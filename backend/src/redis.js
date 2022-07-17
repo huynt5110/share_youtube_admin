@@ -15,6 +15,9 @@ module.exports = async function(app) {
     logger.error('Redis connection error: %s', err.stack);
   });
   await client.connect();
+  // clear everything from redis when server restart to clear on local
+  client.del(consts.SHARED_VIDEOS);
 
   app.set(consts.APP_REDIS_CLIENT, client);
 };
+
