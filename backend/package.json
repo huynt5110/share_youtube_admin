@@ -23,7 +23,7 @@
     "yarn": ">= 0.18.0"
   },
   "scripts": {
-    "test": "yarn run lint && yarn run jest",
+    "test": "yarn run jest",
     "lint": "eslint src/. test/. --config .eslintrc.json",
     "dev": "nodemon src/",
     "start": "node src/",
